@@ -23,6 +23,6 @@ int main( ) {
     int iArray2_size;
     inStream1.open("input1.txt");
     // iArray1_size = readfile(inputAry, inStreamFirst);
-    // inStreamFirst.close( );
+    inStreamFirst.close( );
 return 0; }
 

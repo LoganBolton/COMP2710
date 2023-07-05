@@ -3,8 +3,6 @@
 #include <cstdlib> //for exit()
 using namespace std;
 
-const int MAX_SIZE = 100;
-
 int readfile(int inputArray[], ifstream& inStream){ int index;
     inStream >> inputArray[index];
     while (! inStream.eof()) {
@@ -23,6 +21,6 @@ int main( ) {
     int iArray2_size;
     inStream1.open("input1.txt");
     // iArray1_size = readfile(inputAry, inStreamFirst);
-    // inStreamFirst.close( );
+    inStreamFirst.close( );
 return 0; }
 
