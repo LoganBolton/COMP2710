@@ -51,11 +51,26 @@ int* sort(int array1[], int array1_size, int array2[], int array2_size) {
     for (int i = 0; i < combinedSize; i++) {
         cout << combinedArray[i] << " " ;
     }
-
+    cout << endl;
     return combinedArray;
 }
 
-int main( ) {
+void writeFile(int* sortedArray, string fileName, int sortedSize) {
+
+    ofstream file(fileName); 
+
+    if (file.is_open()) {  // Check if the file is successfully opened
+        for (int i = 0; i < sortedSize; i++) {
+            file << sortedArray[i] << " ";  // Write each element to the file
+        }
+        file.close();  // Close the file
+        cout << "File created succesfully." << endl;
+    } else {
+        cout << "Error writing to file" << endl;
+    }
+}
+
+int main() {
 
     int array1[MAX_SIZE];
     int array1_size;
@@ -88,11 +103,10 @@ int main( ) {
     //Creates and prints out a sorted array of the two arrays
     int* sortedArray = sort(array1, array1_size, array2, array2_size);
 
+    int combinedSize = array1_size + array2_size;
+    string fileName3 = "output.txt";
+    writeFile(sortedArray, fileName3, combinedSize);
 
-    delete[] sortedArray;
+    delete[] sortedArray; // remove managed memory
     return 0;
-}
-void writeFile(int* sortedArray, string fileName) {
-
-    
 }
