@@ -21,9 +21,9 @@ int readfile(int inputArray[], ifstream& inStream){
     return index;
 }
 
-int sort(int array1[], int array1_size, int array2[], int array2_size, int output[]) {
+int* sort(int array1[], int array1_size, int array2[], int array2_size) {
     int combinedSize = array1_size + array2_size;
-    int combinedArray[combinedSize];
+    int* combinedArray = new int[combinedSize];
 
     //Create a combined array of array1 and array2
     for (int i = 0; i < array1_size; i++) { 
@@ -33,7 +33,7 @@ int sort(int array1[], int array1_size, int array2[], int array2_size, int outpu
         combinedArray[i+array1_size] = array2[i];
     }
 
-    //Bubble Sort algorithm
+    //Bubble Sort algorithm to sort combined array
     for(int i = 0; i < combinedSize-1; i++) {      
         for (int j = 0; j < combinedSize-i-1; j++) { 
             if (combinedArray[j] > combinedArray[j+1]) {
@@ -52,7 +52,7 @@ int sort(int array1[], int array1_size, int array2[], int array2_size, int outpu
         cout << combinedArray[i] << " " ;
     }
 
-    return combinedSize;
+    return combinedArray;
 }
 
 int main( ) {
@@ -85,7 +85,14 @@ int main( ) {
     array2_size = readfile(array2, inStream);
     inStream.close();
 
-    sort(array1, array1_size, array2, array2_size, output);
+    //Creates and prints out a sorted array of the two arrays
+    int* sortedArray = sort(array1, array1_size, array2, array2_size);
+
+
+    delete[] sortedArray;
     return 0;
 }
+void writeFile(int* sortedArray, string fileName) {
 
+    
+}
