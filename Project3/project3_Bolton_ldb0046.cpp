@@ -6,7 +6,6 @@
 #include <string>
 using namespace std;
 
-
 const int MAX_SIZE = 100;
 
 int readfile(int inputArray[], ifstream& inStream){ 
@@ -59,9 +58,9 @@ void writeFile(int* sortedArray, string fileName, int sortedSize) {
 
     ofstream file(fileName); 
 
-    if (file.is_open()) {  // Check if the file is successfully opened
+    if (file.is_open()) {
         for (int i = 0; i < sortedSize; i++) {
-            file << sortedArray[i] << " ";  // Write each element to the file
+            file << sortedArray[i] << " "; 
         }
         file.close();  // Close the file
         cout << "File created succesfully." << endl;
