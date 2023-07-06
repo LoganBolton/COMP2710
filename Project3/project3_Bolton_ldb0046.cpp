@@ -9,8 +9,6 @@
 #include <cstdlib> //for exit()
 using namespace std;
 
-const int MAX_SIZE = 100;
-
 //Prints out the integers in the inputted file name.
 //Input: 1) The array whose length is going to be determined.
 //       2) input file stream object
@@ -95,7 +93,7 @@ void writeFile(int* sortedArray, string fileName, int sortedSize) {
 }
 
 int main() {
-    //Initialized variables
+    // Declared Variables
     int array1[MAX_SIZE];
     int array1_size;
     int array2[MAX_SIZE];
