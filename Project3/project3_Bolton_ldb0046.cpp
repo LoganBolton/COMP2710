@@ -4,11 +4,6 @@
 //Compile : g++ project3_Bolton_ldb0046.cpp
 //Run : ./a.out
 
-//Questions 
-// Can I use the bubble sort algorithm?
-// Are input comments correct?
-// Are the variables in the main function conisidered global variables?
-
 #include <fstream>
 #include <iostream>
 #include <cstdlib> //for exit()
