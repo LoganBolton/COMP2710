@@ -46,9 +46,11 @@ string isCorrect (string answer, TriviaNode*& n) {
 }
 int main() {
 
-    string userQuestion;
+    string newQuestion;
+    string newAnswer;
+    int newPoints;
+
     string userAnswer;
-    int userPoints;
 
     //hard coded questions
     TriviaNode* t1 = new TriviaNode(
@@ -71,20 +73,25 @@ int main() {
     
     cout << "*** Welcome to Log's trivia quiz game ***" << endl;
     cout << "Enter a question: ";
-    cin >> userQuestion;
+    cin >> newQuestion;
     
     cout << "Enter an answer";
-    cin >> userAnswer;
+    cin >> newAnswer;
 
     cout << "Enter award points"
-    cin >> userPoints; 
+    cin >> newPoints; 
 
-    addTrivia(t1, userQuestion, userAnswer, userPoints);
+    addTrivia(t1, newQuestion, newAnswer, newPoints);
 
     TriviaNode* current = t1;
     while (current != nullptr) {
         cout << current->question << endl;
-        cout << "Answer ";
+        cout << "Answer: ";
+        cin >> userAnswer;
+
+        cout >> "Your answer is " + isCorrect(userAnswer) >> ". ";
+        cout >> "You receive " + current->points + " points." >> endl;
+
 
 
         current = current->next;
