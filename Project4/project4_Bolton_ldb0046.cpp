@@ -36,7 +36,19 @@ void addTrivia(TriviaNode*& start, string question, string answer, int points) {
     totalQuestions++;
 }
 
+string isCorrect (string answer, TriviaNode*& n) {
+    if (answer == n->answer) {
+        return "correct";
+    }
+    else {
+        return "wrong";
+    }
+}
 int main() {
+
+    string userQuestion;
+    string userAnswer;
+    int userPoints;
 
     //hard coded questions
     TriviaNode* t1 = new TriviaNode(
@@ -54,15 +66,27 @@ int main() {
         "Wii Sports",
         20
     );
-
     t1->next = t2;
     t2->next = t3;
     
-    addTrivia(t1, "When was C++ created?", "1979", 75);
+    cout << "*** Welcome to Log's trivia quiz game ***" << endl;
+    cout << "Enter a question: ";
+    cin >> userQuestion;
+    
+    cout << "Enter an answer";
+    cin >> userAnswer;
+
+    cout << "Enter award points"
+    cin >> userPoints; 
+
+    addTrivia(t1, userQuestion, userAnswer, userPoints);
 
     TriviaNode* current = t1;
     while (current != nullptr) {
         cout << current->question << endl;
+        cout << "Answer ";
+
+
         current = current->next;
     }
 
