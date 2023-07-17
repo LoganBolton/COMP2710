@@ -3,9 +3,7 @@
 #include <string>
 using namespace std;
 
-// There will always be at least 3 questions 
-int totalQuestions = 3;
-
+int totalPoints = 0;
 struct TriviaNode {
     string question;
     string answer;
@@ -32,18 +30,17 @@ void addTrivia(TriviaNode*& start, string question, string answer, int points) {
     }
 
     current->next = newNode;
-
-    totalQuestions++;
 }
 
-string isCorrect (string answer, TriviaNode*& n) {
+bool isCorrect (string answer, TriviaNode*& n) {
     if (answer == n->answer) {
-        return "correct";
+        return true;
     }
     else {
-        return "wrong";
+        return false;
     }
 }
+
 int main() {
 
     string newQuestion;
@@ -72,29 +69,40 @@ int main() {
     t2->next = t3;
     
     cout << "*** Welcome to Log's trivia quiz game ***" << endl;
-    cout << "Enter a question: ";
-    cin >> newQuestion;
+
+    // Input Question
+    // cout << "Enter a question: ";
+    // cin >> newQuestion;
     
-    cout << "Enter an answer";
-    cin >> newAnswer;
+    // cout << "Enter an answer";
+    // cin >> newAnswer;
 
-    cout << "Enter award points"
-    cin >> newPoints; 
+    // cout << "Enter award points";
+    // cin >> newPoints; 
 
-    addTrivia(t1, newQuestion, newAnswer, newPoints);
+    // addTrivia(t1, newQuestion, newAnswer, newPoints);
 
     TriviaNode* current = t1;
     while (current != nullptr) {
-        cout << current->question << endl;
+        cout << "Question: " << current->question << endl;
         cout << "Answer: ";
-        cin >> userAnswer;
+        getline(cin, userAnswer);
 
-        cout >> "Your answer is " + isCorrect(userAnswer) >> ". ";
-        cout >> "You receive " + current->points + " points." >> endl;
+        if (isCorrect(userAnswer, current)) {
+            cout << "Your answer is correct. ";
+            cout << "You receive " + to_string(current->points) + " points." << endl;
+            totalPoints += current->points;
+            cout << "Your Total Points: " + to_string(totalPoints) << endl;
+        }
+        else {
+            cout << "Your answer is wrong. ";
+            cout << "The correct answer is: " + current->answer << endl;
+            cout << "Your Total Points: " + to_string(totalPoints) << endl;
 
-
+        }
 
         current = current->next;
+        cout << endl;
     }
 
     return 0;
