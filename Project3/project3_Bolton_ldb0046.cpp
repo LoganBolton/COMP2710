@@ -9,6 +9,8 @@
 #include <cstdlib> //for exit()
 using namespace std;
 
+const int MAX_SIZE = 100;
+
 //Prints out the integers in the inputted file name.
 //Input: 1) The array whose length is going to be determined.
 //       2) input file stream object
