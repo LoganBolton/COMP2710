@@ -71,17 +71,25 @@ int main() {
     cout << "*** Welcome to Log's trivia quiz game ***" << endl;
 
     // Input Question
-    // cout << "Enter a question: ";
+    cout << "Enter a question: ";
+    getline(cin, newQuestion);
     // cin >> newQuestion;
     
-    // cout << "Enter an answer";
+    cout << "Enter an answer: ";
+    getline(cin, newAnswer);
     // cin >> newAnswer;
 
-    // cout << "Enter award points";
-    // cin >> newPoints; 
 
-    // addTrivia(t1, newQuestion, newAnswer, newPoints);
+    cout << "Enter award points: ";
+    // getline(cin, newPoints);
+    string newPointsString;
+    cin >> newPointsString; 
+    newPoints = stoi(newPointsString);
+    cin.ignore();
 
+    addTrivia(t1, newQuestion, newAnswer, newPoints);
+
+    cout << endl;
     TriviaNode* current = t1;
     while (current != nullptr) {
         cout << "Question: " << current->question << endl;
