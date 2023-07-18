@@ -4,6 +4,8 @@
 using namespace std;
 
 int totalPoints = 0;
+int totalQuestions = 3; //Always at least 3 questions
+
 struct TriviaNode {
     string question;
     string answer;
@@ -30,7 +32,9 @@ void addTrivia(TriviaNode*& start, string question, string answer, int points) {
     }
 
     current->next = newNode;
+    totalQuestions++;
 }
+
 
 bool isCorrect (string answer, TriviaNode*& n) {
     if (answer == n->answer) {
@@ -46,7 +50,7 @@ int main() {
     string newQuestion;
     string newAnswer;
     int newPoints;
-
+    string newPointsString;
     string userAnswer;
 
     //hard coded questions
@@ -81,17 +85,15 @@ int main() {
 
 
     cout << "Enter award points: ";
-    // getline(cin, newPoints);
-    string newPointsString;
+    // getline(cin, newPointsString);
     cin >> newPointsString; 
     newPoints = stoi(newPointsString);
     cin.ignore();
-
     addTrivia(t1, newQuestion, newAnswer, newPoints);
-
+    
     cout << endl;
     TriviaNode* current = t1;
-    while (current != nullptr) {
+    for (int i = 0; i < totalQuestions; i++) {
         cout << "Question: " << current->question << endl;
         cout << "Answer: ";
         getline(cin, userAnswer);
