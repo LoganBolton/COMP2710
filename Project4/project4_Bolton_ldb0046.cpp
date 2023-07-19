@@ -45,6 +45,12 @@ bool isCorrect (string answer, TriviaNode*& n) {
     }
 }
 
+void unitTest () {
+    cout << "***This is a debugging version ***" << endl;
+    cout << "Unit Test Case 1: Ask no question. The program should give a warning message." << endl;
+    cout << "Warning - the number of trivia to be asked must equal to or be larger than 1." << endl;
+}
+
 int main() {
 
     string newQuestion;
@@ -53,8 +59,7 @@ int main() {
     int newPoints;
     string userAnswer;
     
-    #ifdef prod
-        cout <<"prod";
+    #ifdef PROD
         //hard coded questions
         TriviaNode* t1 = new TriviaNode(
             "How long was the shortest war on record? (Hint: how many minutes)", 
