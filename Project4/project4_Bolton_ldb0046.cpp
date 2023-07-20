@@ -84,16 +84,30 @@ void inputQuestion (TriviaNode*& start) {
     cout << endl;
 }
 
+//Is it okay to just input the start of the first node instead of the whole list?
+//Can I also input the total questions?
 int runGame(TriviaNode*& start, int totalQuestions) {
 
-    if (totalQuestions == 0) {
+    if (totalQuestions <= 0) {
         cout << "Warning - the number of trivia to be asked must equal to or be larger than 1." << endl;
         return 1;
     }
 
     TriviaNode* current = start;
     string userAnswer;
+    int countedQuestions = 0;
 
+    while (current != nullptr) {
+        countedQuestions++;
+        current = current->next;
+    }
+
+    if (countedQuestions < totalQuestions) {
+        cout << "Warning - There is only " << to_string(countedQuestions) << "in the list." << endl;
+        return 1;
+    }
+
+    current = start; // Reset current node of linked list to be the start
     for (int i = 0; i < totalQuestions; i++) {
         cout << "Question: " << current->question << endl;
         cout << "Answer: ";
@@ -121,7 +135,7 @@ int runGame(TriviaNode*& start, int totalQuestions) {
 
 TriviaNode* hardCodedQuestions() {
  
-    // Hard coded questions with regions for better readability in VS Code
+    // Hard coded questions 
     TriviaNode* t1 = new TriviaNode(
         "How long was the shortest war on record? (Hint: how many minutes)", 
         "38", 
@@ -156,6 +170,21 @@ void unitTest () {
     start = hardCodedQuestions();
     cout << "Unit Test Case 2.1: Ask 1 question in the linked list. The tester enters an incorrect answer." << endl;
     assert(0 == runGame(start, 1));
+    cout << "Case 2.1 passed" << endl << endl;
+
+    cout << "Unit Test Case 2.2: Ask 1 question in the linked list. The tester enters a correct answer." << endl;
+    assert(0 == runGame(start, 1));
+    cout << "Case 2.2 passed" << endl << endl;
+
+    cout << "Unit Test Case 3: Ask all the questions of the last trivia in the linked list." << endl;
+    assert(0 == runGame(start, 3));
+    cout << "Case 3 passed" << endl << endl;
+
+    cout << "Unit Test Case 4: Ask 5 questions in the linked list." << endl;
+    assert(1 == runGame(start, 5));
+    cout << "Case 4 passed" << endl << endl;
+
+    cout << "*** End of the Debugging Version ***" << endl;
 
 }
 
@@ -166,17 +195,19 @@ void prod() {
     cout << endl;
     inputQuestion(start);
     runGame(start, totalQuestions);
+
+    cout << "*** Thank you for playing the trivia quiz game. Goodbye! ***" << endl;
 }
 
 int main() {
 
     
     // #ifdef PROD
-        // prod();
+        prod();
     // #endif
 
     // #ifdef UNIT_TESTING
-        unitTest();
+        // unitTest();
     // #endif
 
     return 0;
