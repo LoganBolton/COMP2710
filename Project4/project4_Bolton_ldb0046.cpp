@@ -13,8 +13,7 @@ using namespace std;
 int totalPoints = 0;
 int totalQuestions = 0;
 
-
-// Is this format for a Linked List okay?
+// Linked list of trivia questions
 struct TriviaNode {
     string question;
     string answer;
@@ -104,8 +103,6 @@ void inputQuestion (TriviaNode*& start) {
     cout << endl;
 }
 
-//Is it okay to just input the start of the first node instead of the whole list?
-//Can I also input the total questions?
 // Runs the part of the game where the user answers questions
 // Inputs:
 //      start - pointer to the first node in the linked list of questions
@@ -288,48 +285,48 @@ void testInputQuestion() {
 
 // Debugging version of the program
 void debugTest () {
-    TriviaNode* start = nullptr;
+    #ifdef UNIT_TESTING
+        TriviaNode* start = nullptr;
 
-    cout << "***This is a debugging version ***" << endl;
+        cout << "***This is a debugging version ***" << endl;
 
-    cout << "Unit Test Case 1: Ask no question. The program should give a warning message." << endl;
-    assert(1 == runGame(start, 0));
-    cout << "Case 1 Passed" << endl << endl;
+        cout << "Unit Test Case 1: Ask no question. The program should give a warning message." << endl;
+        assert(1 == runGame(start, 0));
+        cout << "Case 1 Passed" << endl << endl;
 
-    start = hardCodedQuestions();
-    cout << "Unit Test Case 2.1: Ask 1 question in the linked list. The tester enters an incorrect answer." << endl;
-    assert(0 == runGame(start, 1));
-    cout << "Case 2.1 passed" << endl << endl;
+        start = hardCodedQuestions();
+        cout << "Unit Test Case 2.1: Ask 1 question in the linked list. The tester enters an incorrect answer." << endl;
+        assert(0 == runGame(start, 1));
+        cout << "Case 2.1 passed" << endl << endl;
 
-    cout << "Unit Test Case 2.2: Ask 1 question in the linked list. The tester enters a correct answer." << endl;
-    assert(0 == runGame(start, 1));
-    cout << "Case 2.2 passed" << endl << endl;
+        cout << "Unit Test Case 2.2: Ask 1 question in the linked list. The tester enters a correct answer." << endl;
+        assert(0 == runGame(start, 1));
+        cout << "Case 2.2 passed" << endl << endl;
 
-    totalPoints = 0;
-    cout << "Unit Test Case 3: Ask all the questions of the last trivia in the linked list." << endl;
-    assert(0 == runGame(start, 3));
-    cout << "Case 3 passed" << endl << endl;
+        totalPoints = 0;
+        cout << "Unit Test Case 3: Ask all the questions of the last trivia in the linked list." << endl;
+        assert(0 == runGame(start, 3));
+        cout << "Case 3 passed" << endl << endl;
 
-    cout << "Unit Test Case 4: Ask 5 questions in the linked list." << endl;
-    assert(1 == runGame(start, 5));
-    cout << "Case 4 passed" << endl << endl;
+        cout << "Unit Test Case 4: Ask 5 questions in the linked list." << endl;
+        assert(1 == runGame(start, 5));
+        cout << "Case 4 passed" << endl << endl;
 
-    cout << "Test Drivers testing..." << endl;
-    testAddTrivia();
-    testIsCorrect();
-    cout << "Testing \"inputQuestion\" Method:" << endl; //Is this Okay?
-    testInputQuestion();
-    cout << endl << "Success" << endl << endl;
-    cout << "*** End of the Debugging Version ***" << endl;
-
+        cout << "Test Drivers testing..." << endl;
+        testAddTrivia();
+        testIsCorrect();
+        cout << "Testing \"inputQuestion\" Method:" << endl; //Is this Okay?
+        testInputQuestion();
+        cout << endl << "Success" << endl << endl;
+        cout << "*** End of the Debugging Version ***" << endl;
+    #endif
 }
 
 int main() {
     // Unit Tests
     #ifdef UNIT_TESTING
         debugTest();
-    #else 
-
+    #else
     // Production Code
     TriviaNode* start = hardCodedQuestions();
     cout << "*** Welcome to Log's trivia quiz game ***" << endl;
@@ -338,6 +335,6 @@ int main() {
 
     cout << "*** Thank you for playing the trivia quiz game. Goodbye! ***" << endl;
 
-    #endif
+    #endif 
     return 0; // success
 }
