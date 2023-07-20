@@ -324,18 +324,13 @@ void debugTest () {
 
 }
 
-// Runs the program
-void prod() {
-
-}
-
-
 int main() {
-
+    // Unit Tests
     #ifdef UNIT_TESTING
         debugTest();
     #else 
 
+    // Production Code
     TriviaNode* start = hardCodedQuestions();
     cout << "*** Welcome to Log's trivia quiz game ***" << endl;
     inputQuestion(start);
@@ -346,4 +341,3 @@ int main() {
     #endif
     return 0; // success
 }
-
