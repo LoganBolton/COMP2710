@@ -4,7 +4,7 @@
 using namespace std;
 
 int totalPoints = 0;
-int totalQuestions = 3; //Always at least 3 questions
+int totalQuestions = 0;
 
 struct TriviaNode {
     string question;
@@ -55,7 +55,6 @@ void inputQuestion (TriviaNode*& start) {
     string newPointsString;
     int newPoints;
     string userAnswer;
-
     do {
         // Input Question
         cout << "Enter a question: ";
@@ -85,20 +84,12 @@ void inputQuestion (TriviaNode*& start) {
     cout << endl;
 }
 
-void unitTest (TriviaNode*& start) {
-    cout << "***This is a debugging version ***" << endl;
-    cout << "Unit Test Case 1: Ask no question. The program should give a warning message." << endl;
-    cout << "Warning - the number of trivia to be asked must equal to or be larger than 1." << endl;
-    
-    // inputQuestion(start);
+int runGame(TriviaNode*& start, int totalQuestions) {
 
-}
-
-void prod(TriviaNode*& start) {
-
-}
-
-void runGame(TriviaNode*& start) {
+    if (totalQuestions == 0) {
+        cout << "Warning - the number of trivia to be asked must equal to or be larger than 1." << endl;
+        return 1;
+    }
 
     TriviaNode* current = start;
     string userAnswer;
@@ -124,12 +115,13 @@ void runGame(TriviaNode*& start) {
         current = current->next;
         cout << endl;
     }
+
+    return 0;
 }
 
-int main() {
-    //hard coded questions
-
-    #pragma region 
+TriviaNode* hardCodedQuestions() {
+ 
+    // Hard coded questions with regions for better readability in VS Code
     TriviaNode* t1 = new TriviaNode(
         "How long was the shortest war on record? (Hint: how many minutes)", 
         "38", 
@@ -147,18 +139,44 @@ int main() {
     );
     t1->next = t2;
     t2->next = t3;   
-    #pragma endregion
 
+    totalQuestions = 3;
+    return t1;
+}
+
+void unitTest () {
+    TriviaNode* start = nullptr;
+
+    cout << "***This is a debugging version ***" << endl;
+
+    cout << "Unit Test Case 1: Ask no question. The program should give a warning message." << endl;
+    assert(1 == runGame(start, 0));
+    cout << "Case 1 Passed" << endl << endl;
+
+    start = hardCodedQuestions();
+    cout << "Unit Test Case 2.1: Ask 1 question in the linked list. The tester enters an incorrect answer." << endl;
+    assert(0 == runGame(start, 1));
+
+}
+
+void prod() {
+    TriviaNode* start = hardCodedQuestions();
+
+    cout << "*** Welcome to Log's trivia quiz game ***" << endl;
+    cout << endl;
+    inputQuestion(start);
+    runGame(start, totalQuestions);
+}
+
+int main() {
+
+    
     // #ifdef PROD
-        cout << "*** Welcome to Log's trivia quiz game ***" << endl;
-        cout << endl;
-        inputQuestion(t1);
-        runGame(t1);
-
+        // prod();
     // #endif
 
     // #ifdef UNIT_TESTING
-        // unitTest(t1);
+        unitTest();
     // #endif
 
     return 0;
