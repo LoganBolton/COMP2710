@@ -35,7 +35,6 @@ void addTrivia(TriviaNode*& start, string question, string answer, int points) {
     totalQuestions++;
 }
 
-
 bool isCorrect (string answer, TriviaNode*& n) {
     if (answer == n->answer) {
         return true;
@@ -44,43 +43,20 @@ bool isCorrect (string answer, TriviaNode*& n) {
         return false;
     }
 }
+// make a function that runs a game without user input questions. 
+// then in main have it ask questions then run the game function.
+// Have unit test ask question function and then run the game function 
 
-void unitTest () {
-    cout << "***This is a debugging version ***" << endl;
-    cout << "Unit Test Case 1: Ask no question. The program should give a warning message." << endl;
-    cout << "Warning - the number of trivia to be asked must equal to or be larger than 1." << endl;
-}
-
-int main() {
-
+void inputQuestion (TriviaNode*& start) {
+    bool continueInput = true; 
+    string continueInputStr;
     string newQuestion;
     string newAnswer;
     string newPointsString;
     int newPoints;
     string userAnswer;
-    
-    #ifdef PROD
-        //hard coded questions
-        TriviaNode* t1 = new TriviaNode(
-            "How long was the shortest war on record? (Hint: how many minutes)", 
-            "38", 
-            100
-        );
-        TriviaNode* t2 = new TriviaNode(
-            "What was Bank of America’s original name? (Hint: Bank of Italy or Bank of Germany)", 
-            "Bank of Italy", 
-            50
-        );
-        TriviaNode* t3 = new TriviaNode(
-            "What is the best-selling video game of all time? (Hint: Call of Duty or Wii Sports)",
-            "Wii Sports",
-            20
-        );
-        t1->next = t2;
-        t2->next = t3;
-        
-        cout << "*** Welcome to Log's trivia quiz game ***" << endl;
 
+    do {
         // Input Question
         cout << "Enter a question: ";
         getline(cin, newQuestion);
@@ -92,36 +68,98 @@ int main() {
         cin >> newPointsString; 
         newPoints = stoi(newPointsString);
         cin.ignore();
-        addTrivia(t1, newQuestion, newAnswer, newPoints);
-        
-        cout << endl;
-        TriviaNode* current = t1;
-        for (int i = 0; i < totalQuestions; i++) {
-            cout << "Question: " << current->question << endl;
-            cout << "Answer: ";
-            getline(cin, userAnswer);
+        addTrivia(start, newQuestion, newAnswer, newPoints);
 
-            if (isCorrect(userAnswer, current)) {
-                cout << "Your answer is correct. ";
-                cout << "You receive " + to_string(current->points) + " points." << endl;
-                totalPoints += current->points;
-                cout << "Your Total Points: " + to_string(totalPoints) << endl;
-            }
-            else {
-                cout << "Your answer is wrong. ";
-                cout << "The correct answer is: " + current->answer << endl;
-                cout << "Your Total Points: " + to_string(totalPoints) << endl;
+        cout << "Continue? (Yes/No): ";
+        cin >> continueInputStr;
 
-            }
-
-            current = current->next;
-            cout << endl;
+        if (continueInputStr == "Yes") {
+            continueInput = true;
         }
-    #endif
+        else {
+            continueInput = false;
+        }
+        cin.ignore();
+    }
+    while (continueInput);
+    cout << endl;
+}
 
-    #ifdef UNIT_TESTING
-        cout << "testing";
-    #endif
+void unitTest (TriviaNode*& start) {
+    cout << "***This is a debugging version ***" << endl;
+    cout << "Unit Test Case 1: Ask no question. The program should give a warning message." << endl;
+    cout << "Warning - the number of trivia to be asked must equal to or be larger than 1." << endl;
+    
+    // inputQuestion(start);
+
+}
+
+void prod(TriviaNode*& start) {
+
+}
+
+void runGame(TriviaNode*& start) {
+
+    TriviaNode* current = start;
+    string userAnswer;
+
+    for (int i = 0; i < totalQuestions; i++) {
+        cout << "Question: " << current->question << endl;
+        cout << "Answer: ";
+        getline(cin, userAnswer);
+
+        if (isCorrect(userAnswer, current)) {
+            cout << "Your answer is correct. ";
+            cout << "You receive " + to_string(current->points) + " points." << endl;
+            totalPoints += current->points;
+            cout << "Your Total Points: " + to_string(totalPoints) << endl;
+        }
+        else {
+            cout << "Your answer is wrong. ";
+            cout << "The correct answer is: " + current->answer << endl;
+            cout << "Your Total Points: " + to_string(totalPoints) << endl;
+
+        }
+
+        current = current->next;
+        cout << endl;
+    }
+}
+
+int main() {
+    //hard coded questions
+
+    #pragma region 
+    TriviaNode* t1 = new TriviaNode(
+        "How long was the shortest war on record? (Hint: how many minutes)", 
+        "38", 
+        100
+    );
+    TriviaNode* t2 = new TriviaNode(
+        "What was Bank of America’s original name? (Hint: Bank of Italy or Bank of Germany)", 
+        "Bank of Italy", 
+        50
+    );
+    TriviaNode* t3 = new TriviaNode(
+        "What is the best-selling video game of all time? (Hint: Call of Duty or Wii Sports)",
+        "Wii Sports",
+        20
+    );
+    t1->next = t2;
+    t2->next = t3;   
+    #pragma endregion
+
+    // #ifdef PROD
+        cout << "*** Welcome to Log's trivia quiz game ***" << endl;
+        cout << endl;
+        inputQuestion(t1);
+        runGame(t1);
+
+    // #endif
+
+    // #ifdef UNIT_TESTING
+        // unitTest(t1);
+    // #endif
 
     return 0;
 }
