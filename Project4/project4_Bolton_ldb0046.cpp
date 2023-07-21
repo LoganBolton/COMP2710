@@ -8,6 +8,7 @@
 #include <iostream>
 #include <sstream> 
 #include <string>
+#include <assert.h>
 using namespace std;
 
 int totalPoints = 0;
@@ -24,7 +25,7 @@ struct TriviaNode {
         string questionInput, 
         string answerInput, 
         int pointsInput, 
-        TriviaNode* nextInput = nullptr)
+        TriviaNode* nextInput = NULL)
 
         : question(questionInput), 
             answer(answerInput), 
@@ -41,7 +42,7 @@ struct TriviaNode {
 TriviaNode* addTrivia(TriviaNode*& start, string question, string answer, int points) {
     TriviaNode* newNode = new TriviaNode(question, answer, points);
     TriviaNode* current = start;
-    while (current->next != nullptr) { // goes to end of linked list
+    while (current->next != NULL) { // goes to end of linked list
         current = current->next;
     }
 
@@ -71,7 +72,6 @@ void inputQuestion (TriviaNode*& start) {
     string continueInputStr;
     string newQuestion;
     string newAnswer;
-    string newPointsString;
     int newPoints;
     string userAnswer;
     do {
@@ -83,8 +83,7 @@ void inputQuestion (TriviaNode*& start) {
         getline(cin, newAnswer);
 
         cout << "Enter award points: ";
-        cin >> newPointsString; 
-        newPoints = stoi(newPointsString);
+        cin >> newPoints; 
         cin.ignore();
         addTrivia(start, newQuestion, newAnswer, newPoints);
 
@@ -117,14 +116,15 @@ int runGame(TriviaNode*& start, int totalQuestions) {
     TriviaNode* current = start;
     string userAnswer;
     int countedQuestions = 0;
+    stringstream ss;
 
-    while (current != nullptr) { // Counts the total amount of questions that are actually in the linked list
+    while (current != NULL) { // Counts the total amount of questions that are actually in the linked list
         countedQuestions++;
         current = current->next;
     }
 
     if (countedQuestions < totalQuestions) { // Checks for invalid input
-        cout << "Warning - There is only " << to_string(countedQuestions) << " trivia in the list." << endl << endl;
+        ss << "Warning - There is only " << countedQuestions << " trivia in the list." << endl << endl;
         return 1;
     }
 
@@ -135,16 +135,19 @@ int runGame(TriviaNode*& start, int totalQuestions) {
         getline(cin, userAnswer);
 
         if (isCorrect(userAnswer, current)) {
-            cout << "Your answer is correct. ";
-            cout << "You receive " + to_string(current->points) + " points." << endl;
+            std::stringstream ss;
+            ss << "Your answer is correct. ";
+            ss << "You receive " << current->points << " points." << std::endl;
             totalPoints += current->points;
-            cout << "Your Total Points: " + to_string(totalPoints) << endl;
+            ss << "Your Total Points: " << totalPoints << std::endl;
+            std::cout << ss.str();
         }
         else {
-            cout << "Your answer is wrong. ";
-            cout << "The correct answer is: " + current->answer << endl;
-            cout << "Your Total Points: " + to_string(totalPoints) << endl;
-
+            std::stringstream ss;
+            ss << "Your answer is wrong. ";
+            ss << "The correct answer is: " << current->answer << std::endl;
+            ss << "Your Total Points: " << totalPoints << std::endl;
+            std::cout << ss.str();
         }
 
         current = current->next; // Moves to next node in the linked list
@@ -209,7 +212,7 @@ void testIsCorrect () {
     
     string testQuestion = "How long was the shortest war on record? (Hint: how many minutes)";
     string testAnswer = "38";
-    while (current != nullptr) { // finds the question
+    while (current != NULL) { // finds the question
         if (current->question == testQuestion) {
             assert(current->answer == testAnswer); 
         }
@@ -219,7 +222,7 @@ void testIsCorrect () {
     current = hardCodedQuestions();
     testQuestion = "What was Bank of America’s original name? (Hint: Bank of Italy or Bank of Germany)";
     testAnswer = "Bank of Italy";
-    while (current != nullptr) {
+    while (current != NULL) {
         if (current->question == testQuestion) {
             assert(current->answer == testAnswer); 
         }
@@ -230,7 +233,7 @@ void testIsCorrect () {
     TriviaNode* createdNode = addTrivia(current, "testQuestion1", "testAnswer1", 3);
     testQuestion = "testQuestion1";
     testAnswer = "testAnswer1";
-    while (current != nullptr) {
+    while (current != NULL) {
         if (current->question == testQuestion) {
             assert(current->answer == testAnswer); 
         }
@@ -244,7 +247,7 @@ void testInputQuestion() {
     istringstream testInput("Test question\nTest answer\n10\nNo\n");
     streambuf* origCin = cin.rdbuf(testInput.rdbuf());
     inputQuestion(start);
-    while (current->next != nullptr) {
+    while (current->next != NULL) {
         current = current->next;
     }
     
@@ -258,7 +261,7 @@ void testInputQuestion() {
     istringstream testInput2("\n\n0\nNo\n");
     origCin = cin.rdbuf(testInput2.rdbuf());
     inputQuestion(start);
-    while (current->next != nullptr) {
+    while (current->next != NULL) {
         current = current->next;
     }
     
@@ -272,7 +275,7 @@ void testInputQuestion() {
     istringstream testInput3("aoebtuhatoehbutnaoaoteunthaboetnhubhbetnuhbatnhoeuatoheuthb\naoebtuhatoehbutnaoaoteunthaboetnhubhbetnuhbatnhoeuatoheuthb\n99999\nNo\n");
     origCin = cin.rdbuf(testInput3.rdbuf());
     inputQuestion(start);
-    while (current->next != nullptr) {
+    while (current->next != NULL) {
         current = current->next;
     }
     
@@ -286,7 +289,7 @@ void testInputQuestion() {
 // Debugging version of the program
 void debugTest () {
     #ifdef UNIT_TESTING
-        TriviaNode* start = nullptr;
+        TriviaNode* start = NULL;
 
         cout << "***This is a debugging version ***" << endl;
 
