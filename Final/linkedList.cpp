@@ -9,7 +9,6 @@ struct Node {
 };
 
 int traverse(Node* n) {
-	std::cout << n->data << std::endl;
 	while (n != NULL) {
 		std::cout << n->data << std::endl;
 		n = n->next;
